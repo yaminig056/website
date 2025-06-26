@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Home - Spark Portfolio</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <script defer src="{{ url_for('static', filename='js/script.js') }}"></script>
+</head>
+<body>
+  <h1>Spark Portfolio</h1>
+  <div class="nav">
+    <a href="{{ url_for('portfolio') }}">My Portfolio</a>
+    <a href="{{ url_for('logout') }}">Logout</a>
+  </div>
+  <p style="text-align:center;">Welcome, {{ user }}!</p>
+
+  {% for company in companies %}
+    <div class="card">
+      <h2><a href="{{ url_for('stock_detail', ticker=company.ticker) }}">{{ company.name }} ({{ company.ticker }})</a></h2>
+      <p>Current Price: ₹{{ company.price }}</p>
+      <strong>Top News:</strong>
+      <ul>
+        {% for article in company.news %}
+          <li><a href="{{ article.url }}" target="_blank">{{ article.title }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endfor %}
+</body>
+</html>

@@ -1,0 +1,6 @@
+Flask
+yfinance
+plotly
+textblob
+GoogleNews
+python-dotenv

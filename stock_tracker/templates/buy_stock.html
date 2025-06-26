@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Buy Shares - Spark Portfolio</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <h1>Buy Shares of {{ ticker }}</h1>
+  <div class="nav">
+    <a href="{{ url_for('home') }}">Back to Home</a>
+  </div>
+
+  <div class="card">
+    <form method="POST">
+      <label>Quantity of Shares:</label><br>
+      <input type="number" name="quantity" min="1" required><br><br>
+
+      <label>Purchase Price per Share (₹):</label><br>
+      <input type="number" name="purchase_price" step="0.01" required><br><br>
+
+      <button type="submit">Buy Shares</button>
+    </form>
+  </div>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Spark Portfolio - Login / Signup</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <script defer src="{{ url_for('static', filename='js/script.js') }}"></script>
+</head>
+<body>
+  <h1>Spark Portfolio</h1>
+  <div class="card" style="max-width: 400px;">
+    {% if error %}
+      <div class="error">{{ error }}</div>
+    {% endif %}
+    <form method="POST" action="{{ url_for('login') }}">
+      <input type="hidden" name="form_type" id="form_type" value="login">
+      <input type="email" name="email" placeholder="Email" required>
+      <input type="password" name="password" placeholder="Password" required>
+      <button type="submit" id="submit_btn">Login</button>
+    </form>
+    <div class="toggle" onclick="toggleForm('signup')">Don't have an account? Sign up</div>
+    <div class="toggle" onclick="toggleForm('login')">Already have an account? Login</div>
+  </div>
+</body>
+</html>

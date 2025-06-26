@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ user }}'s Portfolio - Spark Portfolio</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <script defer src="{{ url_for('static', filename='js/script.js') }}"></script>
+</head>
+<body>
+  <h1>{{ user }}'s Portfolio</h1>
+  <div class="nav">
+    <a href="{{ url_for('home') }}">← Back to Home</a>
+    <a href="{{ url_for('logout') }}">Logout</a>
+  </div>
+
+  {% if stocks %}
+    <div class="stock-grid">
+      {% for stock in stocks %}
+        <div class="stock-card" data-ticker="{{ stock.ticker }}">
+          <button class="delete-btn" onclick="deleteStock('{{ stock.ticker }}')">❌</button>
+          <h2><a href="{{ url_for('stock_detail', ticker=stock.ticker) }}">{{ stock.name }} ({{ stock.ticker }})</a></h2>
+          <p>Quantity: {{ stock.quantity }} shares</p>
+          <p>Purchase Price: ₹{{ stock.purchase_price }}</p>
+          <p>Current Price: ₹{{ stock.current_price }}</p>
+          <p><strong>Profit/Loss:
+            {% if stock.profit_loss >= 0 %}
+              <span style="color:green;">+₹{{ stock.profit_loss }}</span>
+            {% else %}
+              <span style="color:red;">₹{{ stock.profit_loss }}</span>
+            {% endif %}
+          </strong></p>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p style="text-align:center;">You haven’t added any stocks to your portfolio yet.</p>
+  {% endif %}
+</body>
+</html>

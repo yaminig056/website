@@ -1,0 +1,68 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ stock.shortName }} - Spark Portfolio</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <script defer src="{{ url_for('static', filename='js/script.js') }}"></script>
+  <style>
+    .sentiment-positive { color: green; font-weight: bold; }
+    .sentiment-negative { color: red; font-weight: bold; }
+    .sentiment-neutral { color: gray; font-weight: bold; }
+    .sentiment-box {
+      padding: 10px;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      background-color: #f8f8f8;
+    }
+  </style>
+</head>
+<body>
+  <h1>{{ stock.shortName }} ({{ ticker }})</h1>
+
+  <div class="nav">
+    <a href="{{ url_for('buy_stock', ticker=ticker) }}">Add to Portfolio</a>
+    <a href="{{ url_for('home') }}">Back to Home</a>
+  </div>
+
+  <div class="card">
+    <h2>Stock Price Chart</h2>
+    {{ chart | safe }}
+    <div style="margin-top: 15px;">
+      <p>
+        <strong>Open:</strong> ₹{{ open_price }} &nbsp; | &nbsp;
+        <strong>High:</strong> ₹{{ high_price }} &nbsp; | &nbsp;
+        <strong>Low:</strong> ₹{{ low_price }}
+      </p>
+    </div>
+    
+  </div>
+
+  <div class="card sentiment-box">
+    <h2>Sentiment:
+      <span class="{% if sentiment == 'Positive' %}sentiment-positive
+                    {% elif sentiment == 'Negative' %}sentiment-negative
+                    {% else %}sentiment-neutral{% endif %}">
+        {{ sentiment }}
+      </span>
+    </h2>
+    <p>
+      {% if sentiment == 'Positive' %}
+        📈 Investors are optimistic based on recent news. You might want to hold or sell at a profit.
+      {% elif sentiment == 'Negative' %}
+        📉 Recent sentiment is negative. Consider reviewing your position.
+      {% else %}
+        ⚖️ News sentiment is neutral. No strong movement expected.
+      {% endif %}
+    </p>
+
+    <h3>Recent News:</h3>
+    <ul>
+      {% for article in articles %}
+        <li><a href="{{ article.url }}" target="_blank">{{ article.title }}</a></li>
+      {% endfor %}
+    </ul>
+  </div>
+</body>
+</html>
